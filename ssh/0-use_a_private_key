@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # thi file contains an SSh key
-ssh-keygen
+ssh -i ~/.ssh/school
 
