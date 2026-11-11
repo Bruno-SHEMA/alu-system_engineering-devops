@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# thi file contains an RSA SSh key
+ssh-keygen -t rsa -b 4096 -f school -N betty
