@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # thi file contains an SSh key
-ssh -i ~/.ssh/school
+ssh -i ~/.ssh/school ubuntu@13.40.24.155
 
