@@ -1,14 +1,27 @@
 #!/usr/bin/env bash
-# Configuring nginx with a custom http response header
+# configuring a loadbalancer
 
-apt-get update -y
-apt-get install -y nginx
+sudo apt-get update
+sudo apt-get install -y haproxy
 
-sudo mkdir -p /etc/nginx/conf.d
-sudo tee /etc/nginx/conf.d/0-custom_http_response_header.conf > /dev/null <<'EOF'
-add_header X-Served-By $hostname always;
+cat <<"EOF" >/etc/haproxy/haproxy.cfg
+  global 
+    maxconn 2000
+  defaults
+    timeout connect 5s
+    timeout client 50s
+    timeout server 50s
+
+  frontend myfrontend
+    mode http
+    bind *:80
+    default_backend web-servers
+
+  backend web-servers
+    mode http
+    balance roundrobin
+    option httpchk GET /
+    server web-01 13.40.24.155:80 check
+    server web-02 3.8.97.28:80 check
 EOF
-
-sudo nginx -t
-
-sudo service nginx restart
+service haproxy restart
